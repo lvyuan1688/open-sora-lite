@@ -1,0 +1,42 @@
+[package]
+name = "open-sora-lite"
+version = "0.1.1"
+edition = "2021"
+license = "Apache-2.0"
+description = "Lightweight Rust inference runtime for open-source video generation models (Open-Sora, Wan, HunyuanVideo)"
+repository = "https://github.com/lvyuan1688/open-sora-lite"
+documentation = "https://github.com/lvyuan1688/open-sora-lite#readme"
+keywords = ["video-generation", "open-sora", "wan", "hunyuan", "diffusion"]
+categories = ["multimedia::video", "science"]
+authors = ["lvyuan1688 <lvyaoyuan168@gmail.com>"]
+readme = "README.md"
+
+[workspace]
+members = [
+    "crates/osl-core",
+    "crates/osl-pipeline",
+    "crates/osl-server",
+]
+
+[dependencies]
+# Core inference
+candle-core = "0.9"
+candle-nn = "0.9"
+candle-transformers = "0.9"
+# Pipeline
+tokio = { version = "1", features = ["full"] }
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+# Server
+axum = "0.7"
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+[dev-dependencies]
+tokio-test = "0.4"
+
+[profile.release]
+opt-level = 3
+lto = "thin"
+codegen-units = 1
